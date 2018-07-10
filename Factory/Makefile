@@ -1,18 +1,18 @@
 CXX = g++
 
-SRC := $(wildcard *.cpp)
+SRC := $(filter-out main.cpp,$(wildcard *.cpp))
+STATIC_OBJ=$(SRC:%.cpp=%.o)
 CXXFLAGS := -std=c++11 -O3
 DEPFLAGS += -MMD -MF .$@.d
 INC_PATH=.
-STATIC_OBJ=$(SRC:%.cpp=%.o)
 deps := $(SRC:%.cpp=.%.o.d)
 
 .PHONY:
 
 all: exe
 
-exe : $(STATIC_OBJ)
-	$(CXX) -o $@ $< 
+exe : main.cpp $(STATIC_OBJ)
+	$(CXX) $(CXXFLAGS) -o $@ $< $(STATIC_OBJ) -I$(INC_PATH)
 
 %.o : %.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $< -I$(INC_PATH) $(DEPFLAGS)

@@ -1,11 +1,17 @@
 #include <iostream>
 #include "Factory.h"
-#include "Cat.h"
 
 int main() {
-
-    Animal* AniPtr = Factory::Self()->Get("Cat");
-    AniPtr->Speak();
+    Animal* CatPtr = Factory::Self()->Get("Cat");
+    CatPtr->Speak();
+    Animal* DogPtr = Factory::Self()->Get("Dog");
+    DogPtr->Speak();
+    Factory::Self()->Debug();
+    CatPtr->setCnt(3456);
+    DogPtr->setCnt(7890);
+    CatPtr->showCnt();
+    DogPtr->showCnt();
+    Factory::Self()->Debug();
     return 0;
 }
 
